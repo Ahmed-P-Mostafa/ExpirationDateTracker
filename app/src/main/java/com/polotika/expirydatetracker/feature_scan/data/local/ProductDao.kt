@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.polotika.expirydatetracker.feature_scan.domain.model.Product
 
 
 @Dao
@@ -16,9 +17,9 @@ interface ProductDao {
     suspend fun deleteProduct(productEntity: ProductEntity)
 
     @Query("select * from productentity where expiryDate < :date")
-    suspend fun getExpiredProducts(date:Long):List<ProductEntity>
+    suspend fun getExpiredProducts(date:Long):Collection<ProductEntity>
 
 
     @Query("select * from productentity where expiryDate < :date")
-    suspend fun getNonExpiredProducts(date: Long)
+    suspend fun getNonExpiredProducts(date: Long):Collection<ProductEntity>
 }
