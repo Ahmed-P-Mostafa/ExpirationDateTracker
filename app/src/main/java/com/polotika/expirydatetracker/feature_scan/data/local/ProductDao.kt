@@ -17,9 +17,9 @@ interface ProductDao {
     suspend fun deleteProduct(productEntity: ProductEntity)
 
     @Query("select * from productentity where expiryDate < :date")
-    suspend fun getExpiredProducts(date:Long):Collection<ProductEntity>
+    suspend fun getExpiredProducts(date:Long):List<ProductEntity>
 
 
     @Query("select * from productentity where expiryDate < :date")
-    suspend fun getNonExpiredProducts(date: Long):Collection<ProductEntity>
+    suspend fun getNonExpiredProducts(date: Long):List<ProductEntity>
 }

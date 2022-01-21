@@ -23,6 +23,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+
+    buildTypes{
+        debug{
+            resValue("string","BAR_CODE_KEY",localProperties['BARCODE_API_KEY'])
+
+        }
+    }
+
     buildFeatures{
         dataBinding = true
     }
@@ -77,6 +89,10 @@ dependencies {
 
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.3.0"
+
+    // scan barcode
+    implementation('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }
+    implementation 'com.google.zxing:core:3.3.0'
 
 
 }

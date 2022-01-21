@@ -58,7 +58,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/ApiDao.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/ProductsApi.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/ProductsDao.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/data/repository/ScanRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/di/AuthInterceptor.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/di/ScanModule.kt">
           <value>
             <set />
           </value>
@@ -73,7 +98,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/CapturedActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/utils/AppConstats.kt">
           <value>
             <set />
           </value>
@@ -93,7 +128,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/local.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../MLBarcodeScanner/app/src/main/java/com/khaled/mlbarcodescanner/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../NearbyPlacesCleanArch/app/src/main/java/com/polotika/nearbyplacescleanarch/data/api/interceptors/AuthInterceptor.kt">
           <value>
             <set />
           </value>

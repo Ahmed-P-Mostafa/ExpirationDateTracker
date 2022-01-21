@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,8 +18,19 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentIntegrator.UPC_A
+import com.google.zxing.integration.android.IntentIntegrator.UPC_E
+import com.google.zxing.integration.android.IntentResult
 import com.polotika.expirydatetracker.R
 import com.polotika.expirydatetracker.databinding.ActivityMainBinding
+import com.journeyapps.barcodescanner.ScanOptions
+
+import com.journeyapps.barcodescanner.ScanContract
+
+import androidx.activity.result.ActivityResultLauncher
+import com.journeyapps.barcodescanner.ScanIntentResult
+
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
@@ -28,17 +41,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.scanFab.setOnClickListener {
-            if (isCameraPermissionGranted()){
-               startCamera()
-            }else{
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.CAMERA),
-                    PERMISSION_CAMERA_REQUEST
-                )
-
-            }
+            onButtonClick()
         }
+    }
+
+    private val barcodeLauncher = registerForActivityResult(
+        ScanContract()
+    ) { result: ScanIntentResult ->
+        if (result.contents == null) {
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(
+                this,
+                "Scanned: " + result.contents,
+                Toast.LENGTH_LONG
+            ).show()
+            Log.d(TAG, "onActivityResult: ${result.barcodeImagePath}")
+            Log.d(TAG, "onActivityResult: ${result.contents}")
+            Log.d(TAG, "onActivityResult: ${result.formatName}")
+            Log.d(TAG, "onActivityResult: ${result.originalIntent.data}")
+        }
+    }
+
+    // Launch
+    fun onButtonClick() {
+        val options = ScanOptions()
+        options.setOrientationLocked(true)
+        options.captureActivity = CapturedActivity::class.java
+        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
+        options.setPrompt("Scan a barcode")
+        options.setCameraId(0) // Use a specific camera of the device
+        options.setBeepEnabled(false)
+        barcodeLauncher.launch(options)
     }
 
     override fun onRequestPermissionsResult(
@@ -59,14 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CAMERA_INTENT_REQUEST&& resultCode == RESULT_OK){
-            val bitmap = BitmapFactory.decodeFile(data?.data?.path)
 
-            setupCamera(bitmap)
-        }
-    }
 
     private fun isCameraPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA) == PERMISSION_GRANTED
