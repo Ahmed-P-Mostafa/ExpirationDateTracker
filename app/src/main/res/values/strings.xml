@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ExpiryDateTracker</string>
+
+    <string-array name="dates">
+        <item>"6 Hours"</item>
+        <item>"12 Hours"</item>
+        <item>"18 Hours"</item>
+        <item>"24 Hours"</item>
+    </string-array>
 </resources>
