@@ -8,6 +8,7 @@ import com.polotika.expirydatetracker.feature_scan.data.remote.BarcodeApi
 import com.polotika.expirydatetracker.feature_scan.data.repository.ScanRepositoryImpl
 import com.polotika.expirydatetracker.feature_scan.domain.repository.ScanRepository
 import com.polotika.expirydatetracker.feature_scan.domain.use.GetProductUseCase
+import com.polotika.expirydatetracker.feature_scan.domain.use.HomeViewModelUseCases
 import com.polotika.expirydatetracker.utils.AppConstats.TIME_OUT_VALUE
 import dagger.Module
 import dagger.Provides
@@ -89,6 +90,15 @@ object ScanModule {
     @Provides
     fun provideProductUseCase(repository: ScanRepository): GetProductUseCase {
         return GetProductUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHomeViewModelUseCases(
+        getProductUseCase: GetProductUseCase,
+        repository: ScanRepository
+    ): HomeViewModelUseCases {
+        return HomeViewModelUseCases(getProductUseCase,repository)
     }
 
 

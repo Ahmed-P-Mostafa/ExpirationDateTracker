@@ -1,8 +1,10 @@
 package com.polotika.expirydatetracker.ui
 
+import android.content.DialogInterface.BUTTON_NEGATIVE
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -35,32 +37,40 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    private fun showSaveDialog(product: Product) {
-
-        val dialog = MaterialAlertDialogBuilder(this)
+    private fun showSaveDialog() {
+        val builder = MaterialAlertDialogBuilder(this)
         val bindingDialog = SaveDialogLayoutBinding.inflate(LayoutInflater.from(this))
         bindingDialog.vm = viewModel
         bindingDialog.p = viewModel.product.value
-        dialog.setView(bindingDialog.root).setTitle("save product").setCancelable(false)
-            .setPositiveButton("Scan more") { a, _ ->
-                viewModel.addNewProduct {
-                    if (!it) {
-                        bindingDialog.productDate.error = "Please select one of the options first"
-                    } else {
-                        a.dismiss()
-                    }
-                }
-                onNewProductClick(binding.scanFab)
-            }.setNegativeButton("Save") { a, _ ->
-                viewModel.addNewProduct {
-                    if (!it) {
-                        bindingDialog.productDate.error = "Please select one of the options first"
-                    } else {
-                        a.dismiss()
-                    }
-                }
-            }.create()
+        builder
+            .setView(bindingDialog.root)
+            .setTitle("save product")
+            .setCancelable(false)
+            .setPositiveButton("Scan more"){_,_ ->}
+            .setNegativeButton("Save"){_,_ ->}
+        val dialog :AlertDialog = builder.create()
         dialog.show()
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            viewModel.addNewProduct {
+                if (!it) {
+                    bindingDialog.productDate.error = "Please select one of the options first"
+                } else {
+                    dialog.dismiss()
+                    onNewProductClick(binding.scanFab)
+                }
+            }
+        }
+        dialog.getButton(BUTTON_NEGATIVE).setOnClickListener {
+            viewModel.addNewProduct {
+                if (!it) {
+                    bindingDialog.productDate.error = "Please select one of the options first"
+                } else {
+                    dialog.dismiss()
+                }
+            }
+
+        }
     }
 
 
@@ -78,11 +88,9 @@ class HomeActivity : AppCompatActivity() {
                         Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
                     }
                     is HomeDataState.Success -> {
-                        showSaveDialog(it.product)
+                        showSaveDialog()
                     }
-                    is HomeDataState.Loading -> {
 
-                    }
                 }
             }
         }

@@ -168,6 +168,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/domain/use-case/HomeViewModelUseCases.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/presentation/BindingAdapter.kt">
           <value>
             <set />
