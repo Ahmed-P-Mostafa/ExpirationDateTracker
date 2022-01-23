@@ -1,75 +1,122 @@
 package com.polotika.expirydatetracker.feature_scan.presentation
 
-import android.R
-import android.widget.ArrayAdapter
+import android.app.AlarmManager.INTERVAL_HOUR
+import android.util.Log
+import android.widget.AdapterView
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.polotika.expirydatetracker.feature_scan.domain.model.Product
 import com.polotika.expirydatetracker.feature_scan.domain.repository.ScanRepository
+import com.polotika.expirydatetracker.feature_scan.domain.use.GetProductUseCase
+import com.polotika.expirydatetracker.ui.CapturedActivity
+import com.polotika.expirydatetracker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: ScanRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repository: ScanRepository,
+    private val getProductUseCase: GetProductUseCase
+) : ViewModel() {
     private val TAG = "HomeViewModel"
 
-    val iProduct = Product("name","type",554L)
+    private val _uieFlow = MutableSharedFlow<HomeDataState>()
+    val uiFlow = _uieFlow.asSharedFlow()
 
-    private val _shareFlow = MutableSharedFlow<UIEvent>()
-    val shareFlow = _shareFlow.asSharedFlow()
+    var product = MutableLiveData<Product>(Product("name", "type", 554L))
+    val loadingProgress = ObservableBoolean(false)
+    val datesListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
-    val homeListAdapter: HomeRecyclerViewAdapter
-        get() {
+        val expiryHours = (position + 1) * 6L * INTERVAL_HOUR
+        Log.d(TAG, ": $position")
+        Log.d(TAG, ": ${expiryHours / 1000 / 60 / 60}")
+        val time = Calendar.getInstance().timeInMillis
+        //1642888916554
+        product.value = product.value?.copy(expiryDate = expiryHours + time)
+    }
 
-            var list = emptyList<Product>()
-            viewModelScope.launch {
-                val date = Calendar.getInstance().timeInMillis
-                list = repository.getNonExpiredProducts(date).map { it }
-            }
-            return HomeRecyclerViewAdapter(list)
+    val homeListAdapter = HomeRecyclerViewAdapter()
+    fun getProductsFromDatabase() :List<Product> = runBlocking{
+        viewModelScope.launch {
+            val date = Calendar.getInstance().timeInMillis
+            val list = repository.getNonExpiredProducts(date).map { it }
+            Log.d(TAG, "getProductsFromDatabase: ${list.size}")
+
+            homeListAdapter.changeDate(list)
         }
+
+            val deferred = async {
+                val date = Calendar.getInstance().timeInMillis
+                repository.getNonExpiredProducts(date).map { it }
+            }
+            if (deferred.await().isNotEmpty()){
+                return@runBlocking deferred.await()
+            }else{
+                return@runBlocking emptyList()
+            }
+
+    }
+
+    fun onNewProduct(barCodeLauncherOptions: (ScanOptions) -> Unit) {
+        val options = ScanOptions()
+        options.setOrientationLocked(true)
+        options.captureActivity = CapturedActivity::class.java
+        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
+        options.setPrompt("Scan a barcode")
+        options.setCameraId(0) // Use a specific camera of the device
+        options.setBeepEnabled(false)
+        barCodeLauncherOptions(options)
+    }
 
     fun activityIntentResult(result: ScanIntentResult) {
         viewModelScope.launch {
+            loadingProgress.set(true)
             if (result.contents != null) {
-                _shareFlow.emit(UIEvent.ShowSaveDialog(Product(name = "name", type = "type", expiryDate = 121L)))
-                try {
-                    /*repository.searchForProduct(result.contents.toLong()).apply {
-                        if (isSuccessful && code() in 199..299) {
-                            if (body()?.products?.isNotEmpty()!!) {
-                                _productFlow.emit(body()?.products?.get(0)?.toProduct()!!)
-                                _eventFlow.emit(UIEvent.ShowSaveDialog(body()?.products?.get(0)?.toProduct()!!))
-                                state.postValue("dialog")
-                            } else showErrorSnackBar("Product not found")
-                        } else showErrorSnackBar("Product not found")
-                    }*/
-                } catch (e: HttpException) { showErrorSnackBar("Product not found") }
+                val productResponse = getProductUseCase.invoke(result.contents.toLong())
+                when (productResponse) {
+                    is Resource.Success -> {
+                        product.value = productResponse.data
+                        _uieFlow.emit(HomeDataState.Success(productResponse.data!!))
+                        loadingProgress.set(false)
+                    }
+                    is Resource.Error -> {
+                        _uieFlow.emit(HomeDataState.Failed(productResponse.message!!))
+                        loadingProgress.set(false)
+                    }
+                    is Resource.Loading -> {
+                        _uieFlow.emit(HomeDataState.Loading)
+                        loadingProgress.set(true)
+                    }
+                }
             } else {
-                showErrorSnackBar("Not scanned")
+                _uieFlow.emit(HomeDataState.Failed("Not Scanned"))
             }
-            //state.postValue("snackbar")
         }
     }
 
-    private suspend fun showErrorSnackBar(message:String){
-        _shareFlow.emit(UIEvent.ShowSnackBar(message))
+    fun addNewProduct(isDataValid: (Boolean) -> Unit) {
+        if (product.value?.expiryDate!! > Calendar.getInstance().timeInMillis) {
+            isDataValid(true)
+            viewModelScope.launch {
+                repository.addNewProduct(product.value!!)
+                getProductsFromDatabase()
+            }
+        } else {
+            isDataValid(false)
+        }
     }
 }
 
 sealed class HomeDataState() {
-    class Success() : HomeDataState()
-    class Failed() : HomeDataState()
+    class Success(val product: Product) : HomeDataState()
+    class Failed(val message: String) : HomeDataState()
     object Loading : HomeDataState()
-}
-
-sealed class UIEvent() {
-    data class ShowSnackBar(val message: String) : UIEvent()
-    data class ShowSaveDialog(val product:Product):UIEvent()
 }

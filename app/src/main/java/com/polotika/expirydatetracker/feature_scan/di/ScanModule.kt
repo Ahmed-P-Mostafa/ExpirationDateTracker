@@ -7,6 +7,7 @@ import com.polotika.expirydatetracker.feature_scan.data.local.ProductDatabase
 import com.polotika.expirydatetracker.feature_scan.data.remote.BarcodeApi
 import com.polotika.expirydatetracker.feature_scan.data.repository.ScanRepositoryImpl
 import com.polotika.expirydatetracker.feature_scan.domain.repository.ScanRepository
+import com.polotika.expirydatetracker.feature_scan.domain.use.GetProductUseCase
 import com.polotika.expirydatetracker.utils.AppConstats.TIME_OUT_VALUE
 import dagger.Module
 import dagger.Provides
@@ -45,7 +46,10 @@ object ScanModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor,loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
@@ -80,6 +84,11 @@ object ScanModule {
     fun provideProductDao(@ApplicationContext context: Context): ProductDatabase {
         return Room.databaseBuilder(context, ProductDatabase::class.java, "products_db")
             .fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    fun provideProductUseCase(repository: ScanRepository): GetProductUseCase {
+        return GetProductUseCase(repository)
     }
 
 

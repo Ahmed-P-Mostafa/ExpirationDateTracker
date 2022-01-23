@@ -1,3 +1,3 @@
 package com.polotika.expirydatetracker.feature_scan.domain.model
 
-data class Product(val name:String,val type:String,val expiryDate:Long)
+data class Product(var name:String,var type:String,var expiryDate:Long)

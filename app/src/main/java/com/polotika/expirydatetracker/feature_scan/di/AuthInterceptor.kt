@@ -11,9 +11,12 @@ class AuthInterceptor @Inject constructor(private val context: Context) : Interc
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain.request()
-        val originalUrl = request.  url
+        val originalUrl = request.url
         val modifiedUrl = originalUrl.newBuilder()
-            .addQueryParameter(BARCODE_SECRET_KEY,context.resources.getString(R.string.BARCODE_KEY))
+            .addQueryParameter(
+                BARCODE_SECRET_KEY,
+                context.resources.getString(R.string.BARCODE_KEY)
+            )
             .build()
         val modifiedRequest = request.newBuilder().url(modifiedUrl).build()
 
