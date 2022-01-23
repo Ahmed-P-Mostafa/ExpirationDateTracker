@@ -2,20 +2,17 @@ package com.polotika.expirydatetracker.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
-import com.polotika.expirydatetracker.R
 import com.polotika.expirydatetracker.databinding.FragmentHomeBinding
 import com.polotika.expirydatetracker.databinding.SaveDialogLayoutBinding
 import com.polotika.expirydatetracker.feature_scan.presentation.HomeDataState
@@ -40,7 +37,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater,container,false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.vm = viewModel
         viewModel.getProductsFromDatabase()
         observers()
@@ -61,9 +58,9 @@ class HomeFragment : Fragment() {
             .setView(bindingDialog.root)
             .setTitle("save product")
             .setCancelable(false)
-            .setPositiveButton("Scan more"){_,_ ->}
-            .setNegativeButton("Save"){_,_ ->}
-        val dialog : AlertDialog = builder.create()
+            .setPositiveButton("Scan more") { _, _ -> }
+            .setNegativeButton("Save") { _, _ -> }
+        val dialog: AlertDialog = builder.create()
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
@@ -72,7 +69,9 @@ class HomeFragment : Fragment() {
                     bindingDialog.productDate.error = "Please select one of the options first"
                 } else {
                     dialog.dismiss()
-                    //onNewProductClick(binding.scanFab)
+                    viewModel.onNewProduct {
+                        barcodeLauncher.launch(it)
+                    }
                 }
             }
         }
@@ -87,6 +86,7 @@ class HomeFragment : Fragment() {
 
         }
     }
+
     private fun observers() {
         this.lifecycleScope.launch {
             viewModel.uiFlow.collectLatest {
@@ -102,8 +102,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-
 
 
 }

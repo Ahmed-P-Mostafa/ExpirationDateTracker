@@ -63,6 +63,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ExpiryDateApplication.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/MainActivity.kt">
           <value>
             <set />
@@ -213,6 +218,51 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/app/PreferencesHelper.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/app/RebootBroadCastReceiver.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/data/repository/TrackRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/data/repository/TrackRepositoryUmpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/di/TrackModule.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/domain/repository/PreferencesRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/domain/repository/TrackRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/domain/usecases/NotificationWorker.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_track/presentation/TrackViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/CapturedActivity.kt">
           <value>
             <set />
@@ -234,6 +284,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/utils/AppConstants.kt">
           <value>
             <set />
           </value>
@@ -354,6 +409,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../NearbyPlacesCleanArch/app/src/main/java/com/polotika/nearbyplacescleanarch/ui/feature/map/RestaurantMapFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ReminderApp/app/src/main/java/com/example/reminderapp/utils/services/BootReceiver.kt">
           <value>
             <set />
           </value>

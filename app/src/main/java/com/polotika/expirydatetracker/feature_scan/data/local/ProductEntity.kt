@@ -8,5 +8,6 @@ data class ProductEntity(
     val name: String,
     val type: String,
     val expiryDate: Long,
+    val isNotified :Boolean = false,
     @PrimaryKey val id: Int? = null
 )
