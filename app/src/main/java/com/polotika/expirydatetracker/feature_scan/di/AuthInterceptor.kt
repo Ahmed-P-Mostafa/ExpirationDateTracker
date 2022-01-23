@@ -2,7 +2,7 @@ package com.polotika.expirydatetracker.feature_scan.di
 
 import android.content.Context
 import com.polotika.expirydatetracker.R
-import com.polotika.expirydatetracker.utils.AppConstats.BARCODE_SECRET_KEY
+import com.polotika.expirydatetracker.utils.AppConstants.BARCODE_SECRET_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

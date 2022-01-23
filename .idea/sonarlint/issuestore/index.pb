@@ -20,14 +20,6 @@ s
 Capp/src/test/java/com/polotika/expirydatetracker/ExampleUnitTest.kt,b/0/b0680766832ed5f40b3bce12fcf8639a2974b9c3
 F
 app/proguard-rules.pro,9/e/9e08934d811afe28fbc77aaa3c0d747b94348db9
-v
-Fapp/src/main/java/com/polotika/expirydatetracker/BarcodeApplication.kt,6/a/6ac6159c5c991c8e1bc1b3e852217a3a280bdaee
-â
-Yapp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/local/ProductEntity.kt,9/1/91b95ccf17e3abaabf291eb7e4659c3f150a5603
-É
-Sapp/src/main/java/com/polotika/expirydatetracker/feature_scan/di/AuthInterceptor.kt,6/3/632428826ee9ab09486c98da69c8af32792af698
-Ö
-Uapp/src/main/java/com/polotika/expirydatetracker/feature_scan/domain/model/Product.kt,1/6/162899c8af286695ed6f4444f71e4dee7263fbb8
 é
 ^app/src/main/java/com/polotika/expirydatetracker/feature_scan/presentation/ProductsDiffUtil.kt,0/5/058cef0d97b925fe657a5a3a8425d18a37e5233b
 m
@@ -40,10 +32,6 @@ Bapp/src/main/java/com/polotika/expirydatetracker/utils/Resource.kt,b/b/bb4200c
 eapp/src/main/java/com/polotika/expirydatetracker/feature_scan/presentation/HomeRecyclerViewAdapter.kt,6/7/672634853b327d7a464acc5640a584175bf949dd
 w
 Gapp/src/main/java/com/polotika/expirydatetracker/ui/CapturedActivity.kt,a/d/ad705ecbe44652abc90940fe44d401c840ce0c69
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-Ü
-Vapp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/local/ProductDao.kt,5/5/559107791f12755a9d3bcd2993f02ac08fd74600
 á
 Wapp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/ProductDto.kt,a/6/a6a9b172eb6929ee0e31d27bcd2096b2c2eee794
 è
@@ -58,9 +46,5 @@ Wapp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/Barco
 Uapp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/StoreDto.kt,f/a/fa504823ba1a3f7074d335851dbc9598ca72fa50
 à
 Xapp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/remote/ShippingDto.kt,a/8/a800a12eb0bd132831cc95f74549d28acf9ed935
-ã
-[app/src/main/java/com/polotika/expirydatetracker/feature_scan/data/local/ProductDatabase.kt,a/3/a31a340224fba282c0e03523d7a68587c41aa957
 ë
 aapp/src/main/java/com/polotika/expirydatetracker/feature_scan/domain/repository/ScanRepository.kt,f/4/f49738c19f279d8c75e5e687953893446426fd27
-ì
-capp/src/main/java/com/polotika/expirydatetracker/feature_scan/data/repository/ScanRepositoryImpl.kt,c/b/cbf0347f530b062d0f789bb41f674f246ea81944

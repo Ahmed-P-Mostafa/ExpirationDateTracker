@@ -9,7 +9,7 @@ import com.polotika.expirydatetracker.feature_scan.data.repository.ScanRepositor
 import com.polotika.expirydatetracker.feature_scan.domain.repository.ScanRepository
 import com.polotika.expirydatetracker.feature_scan.domain.use.GetProductUseCase
 import com.polotika.expirydatetracker.feature_scan.domain.use.HomeViewModelUseCases
-import com.polotika.expirydatetracker.utils.AppConstats.TIME_OUT_VALUE
+import com.polotika.expirydatetracker.utils.AppConstants.TIME_OUT_VALUE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
