@@ -8,18 +8,22 @@ import com.polotika.expirydatetracker.feature_scan.data.remote.BarcodeApi
 import com.polotika.expirydatetracker.feature_scan.data.repository.ScanRepositoryImpl
 import com.polotika.expirydatetracker.feature_scan.domain.repository.ScanRepository
 import com.polotika.expirydatetracker.feature_scan.domain.use.GetProductUseCase
+import com.polotika.expirydatetracker.feature_scan.domain.use.HomeViewModelUseCases
 import com.polotika.expirydatetracker.utils.AppConstats.TIME_OUT_VALUE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -91,5 +95,24 @@ object ScanModule {
         return GetProductUseCase(repository)
     }
 
+    @Singleton
+    @Provides
+    fun provideHomeViewModelUseCases(
+        getProductUseCase: GetProductUseCase,
+        repository: ScanRepository
+    ): HomeViewModelUseCases {
+        return HomeViewModelUseCases(getProductUseCase,repository)
+    }
+
+
+    @IoDispatcher
+    @Provides
+    fun provideIoDispatcher() :CoroutineDispatcher {
+        return Dispatchers.IO
+    }
 
 }
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class IoDispatcher
