@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="vm"
             type="com.polotika.expirydatetracker.feature_scan.presentation.HomeViewModel" />
@@ -28,12 +29,6 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <!--  <EditText
-              android:id="@+id/product_name"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="4dp"
-              android:text="@{p.name}" />-->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
@@ -44,7 +39,7 @@
                 android:id="@+id/product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{p.name}" />
+                android:text="@={p.name}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +61,7 @@
                 android:id="@+id/product_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{p.type}" />
+                android:text="@={p.type}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,15 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Expiration Time"
-
             android:textColor="@color/black"
             android:textSize="16sp" />
-        <!-- <AutoCompleteTextView
-             android:id="@+id/product_date"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:hint="Select the expiration period"
-             android:convertItemDate="@{p.expiryDate}"/>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/menu"
@@ -94,10 +82,9 @@
 
             <AutoCompleteTextView
                 android:id="@+id/product_date"
+                setListener="@{vm.datesListener}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:datesAdapter="@{true}"
-                entries="@{@stringArray/dates}"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
