@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import com.polotika.expirydatetracker.feature_scan.di.IoDispatcher
 import com.polotika.expirydatetracker.feature_scan.domain.model.Product
 import com.polotika.expirydatetracker.feature_scan.domain.use.HomeViewModelUseCases
 import com.polotika.expirydatetracker.ui.CapturedActivity
 import com.polotika.expirydatetracker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import java.util.*
@@ -21,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCases: HomeViewModelUseCases
+    private val useCases: HomeViewModelUseCases,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uieFlow = MutableSharedFlow<HomeDataState>()
@@ -36,24 +39,13 @@ class HomeViewModel @Inject constructor(
         product.value = product.value?.copy(expiryDate = expiryHours + time)
     }
 
-    val homeListAdapter = HomeRecyclerViewAdapter()
-    fun getProductsFromDatabase() :List<Product> = runBlocking{
-        viewModelScope.launch {
+    val homeListAdapter = ProductsRecyclerViewAdapter()
+    fun getProductsFromDatabase(){
+        viewModelScope.launch{
             val date = Calendar.getInstance().timeInMillis
             val list = useCases.repository.getNonExpiredProducts(date).map { it }
             homeListAdapter.changeDate(list)
         }
-
-            val deferred = async {
-                val date = Calendar.getInstance().timeInMillis
-                useCases.repository.getNonExpiredProducts(date).map { it }
-            }
-            if (deferred.await().isNotEmpty()){
-                return@runBlocking deferred.await()
-            }else{
-                return@runBlocking emptyList()
-            }
-
     }
 
     fun onNewProduct(barCodeLauncherOptions: (ScanOptions) -> Unit) {
@@ -68,19 +60,17 @@ class HomeViewModel @Inject constructor(
     }
 
     fun activityIntentResult(result: ScanIntentResult) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             loadingProgress.set(true)
             if (result.contents != null) {
                 val productResponse = useCases.getProduct.invoke(result.contents.toLong())
                 when (productResponse) {
                     is Resource.Success -> {
-                        product.value = productResponse.data
+                        product.postValue( productResponse.data)
                         _uieFlow.emit(HomeDataState.Success(productResponse.data!!))
-                        loadingProgress.set(false)
                     }
                     is Resource.Error -> {
                         _uieFlow.emit(HomeDataState.Failed(productResponse.message!!))
-                        loadingProgress.set(false)
                     }
                     is Resource.Loading -> {
                         _uieFlow.emit(HomeDataState.Loading)
@@ -90,13 +80,14 @@ class HomeViewModel @Inject constructor(
             } else {
                 _uieFlow.emit(HomeDataState.Failed("Not Scanned"))
             }
+            loadingProgress.set(false)
         }
     }
 
     fun addNewProduct(isDataValid: (Boolean) -> Unit) {
         if (product.value?.expiryDate!! > Calendar.getInstance().timeInMillis) {
             isDataValid(true)
-            viewModelScope.launch {
+            viewModelScope.launch(dispatcher) {
                 useCases.repository.addNewProduct(product.value!!)
                 getProductsFromDatabase()
             }

@@ -8,6 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.journeyapps.barcodescanner.ScanContract
@@ -24,81 +27,19 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
-
+    private lateinit var binding :ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        binding.vm = viewModel
-        viewModel.getProductsFromDatabase()
-        observers()
 
+
+        val host: NavHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment? ?:return
+        // assign nav controller with host
+        val navController = host.navController
+
+        // setup nacController with Bottom Navigation View
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        bottomNavigationView.setupWithNavController(navController)
     }
 
-    private fun showSaveDialog() {
-        val builder = MaterialAlertDialogBuilder(this)
-        val bindingDialog = SaveDialogLayoutBinding.inflate(LayoutInflater.from(this))
-        bindingDialog.vm = viewModel
-        bindingDialog.p = viewModel.product.value
-        builder
-            .setView(bindingDialog.root)
-            .setTitle("save product")
-            .setCancelable(false)
-            .setPositiveButton("Scan more"){_,_ ->}
-            .setNegativeButton("Save"){_,_ ->}
-        val dialog :AlertDialog = builder.create()
-        dialog.show()
-
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            viewModel.addNewProduct {
-                if (!it) {
-                    bindingDialog.productDate.error = "Please select one of the options first"
-                } else {
-                    dialog.dismiss()
-                    onNewProductClick(binding.scanFab)
-                }
-            }
-        }
-        dialog.getButton(BUTTON_NEGATIVE).setOnClickListener {
-            viewModel.addNewProduct {
-                if (!it) {
-                    bindingDialog.productDate.error = "Please select one of the options first"
-                } else {
-                    dialog.dismiss()
-                }
-            }
-
-        }
-    }
-
-
-    private val barcodeLauncher = registerForActivityResult(
-        ScanContract()
-    ) { result: ScanIntentResult ->
-        viewModel.activityIntentResult(result)
-    }
-
-    private fun observers() {
-        this.lifecycleScope.launch {
-            viewModel.uiFlow.collectLatest {
-                when (it) {
-                    is HomeDataState.Failed -> {
-                        Snackbar.make(binding.root, it.message, Snackbar.LENGTH_SHORT).show()
-                    }
-                    is HomeDataState.Success -> {
-                        showSaveDialog()
-                    }
-
-                }
-            }
-        }
-    }
-
-    fun onNewProductClick(view: android.view.View) {
-        viewModel.onNewProduct { scanOptions ->
-            barcodeLauncher.launch(scanOptions)
-        }
-    }
 }

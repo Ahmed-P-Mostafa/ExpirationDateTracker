@@ -18,6 +18,11 @@
             <set />
           </value>
         </entry>
+        <entry key="/fragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Dictionary/app/src/main/java/com/polotika/dictionary/feature_dictionary/domain/repository/WordInfoRepository.kt">
           <value>
             <set />
@@ -39,6 +44,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/build/tmp/kapt3/stubs/debug/com/polotika/expirydatetracker/feature_scan/data/local/ProductDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/build/tmp/kapt3/stubs/debug/com/polotika/expirydatetracker/feature_scan/presentation/HomeViewModel.java">
           <value>
             <set />
           </value>
@@ -178,6 +188,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/presentation/ExpiredViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/feature_scan/presentation/HomeRecyckerViewAdapter.kt">
           <value>
             <set />
@@ -203,7 +218,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/ExpiredFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/HomeActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/polotika/expirydatetracker/ui/HomeFragment.kt">
           <value>
             <set />
           </value>
@@ -233,6 +258,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_expired.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/product_item.xml">
           <value>
             <set />
@@ -243,7 +278,42 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/menu/bottom_navigation_menu.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/navigation/home_nav.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/test/java/com/polotika/expirydatetracker/feature_scan/data/local/ProductDatabaseTest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/test/java/com/polotika/expirydatetracker/feature_scan/data/repository/ScanRepositoryImplTest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/test/java/com/polotika/expirydatetracker/feature_scan/domain/GetProductUseCaseTest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/test/java/com/polotika/expirydatetracker/feature_scan/domain/usecases/GetProductUseCaseTest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/test/java/com/polotika/expirydatetracker/feature_scan/domain/usecases/HomeViewModelUseCasesTest.kt">
           <value>
             <set />
           </value>
@@ -264,6 +334,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../MLBarcodeScanner/app/src/main/java/com/khaled/mlbarcodescanner/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../NavigationComponent-Codelab/app/src/main/java/com/example/navigationcomponentdemo/ProfileFragment.kt">
           <value>
             <set />
           </value>

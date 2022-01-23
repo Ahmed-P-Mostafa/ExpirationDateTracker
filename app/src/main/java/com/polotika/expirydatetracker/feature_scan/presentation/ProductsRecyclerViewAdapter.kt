@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.polotika.expirydatetracker.databinding.ProductItemBinding
 import com.polotika.expirydatetracker.feature_scan.domain.model.Product
 
-class HomeRecyclerViewAdapter(var list:List<Product>?= emptyList()) :RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
+class ProductsRecyclerViewAdapter(var list:List<Product>?= emptyList()) :RecyclerView.Adapter<ProductsRecyclerViewAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
