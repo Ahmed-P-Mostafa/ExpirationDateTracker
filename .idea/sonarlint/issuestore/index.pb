@@ -3,8 +3,6 @@
 app/.gitignore,5/1/51e1c5d383dfaa35e0e7e5873a0a99355a86880f
 ‚
 Rapp/src/androidTest/java/com/polotika/expirydatetracker/ExampleInstrumentedTest.kt,e/3/e3680eaba07cd273adc67c92f5770bd7ece52e9e
-q
-Aapp/src/main/java/com/polotika/expirydatetracker/ProductEntity.kt,2/1/215c291d95e46d550811f3f82650fadd61562b69
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 7

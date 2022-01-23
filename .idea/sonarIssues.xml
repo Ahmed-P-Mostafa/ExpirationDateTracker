@@ -363,6 +363,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../WorkManager/app/src/main/java/com/example/workmanager/IHour.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../WorkManager/app/src/main/java/com/example/workmanager/RingWorker.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
